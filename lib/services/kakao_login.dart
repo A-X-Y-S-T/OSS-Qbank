@@ -1,16 +1,20 @@
-import 'package:oss_qbank/social_login.dart';
+import 'package:oss_qbank/services/social_login.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
+///Kakao Login
 class KakaoLogin implements SocialLogin {
   @override
   Future<bool> login() async {
     try {
       bool isInstalled = await isKakaoTalkInstalled();
       if (isInstalled) {
+        print("Kakaotalk is installed.");
         try {
           await UserApi.instance.loginWithKakaoTalk();
+          print("Logined with Kakao.");
           return true;
         } catch (error) {
+          print("Fail to login with Kakao.");
           return false;
         }
       } else {

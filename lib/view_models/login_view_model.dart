@@ -1,12 +1,12 @@
-import 'package:oss_qbank/social_login.dart';
+import 'package:oss_qbank/services/social_login.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
-class MainViewModel {
+class LoginViewModel {
   final SocialLogin _socialLogin;
   bool isLogined = false;
   User? user;
 
-  MainViewModel(this._socialLogin);
+  LoginViewModel(this._socialLogin);
 
   Future<void> login() async {
     isLogined = await _socialLogin.login();
