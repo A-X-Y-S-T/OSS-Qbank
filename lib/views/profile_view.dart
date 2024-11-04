@@ -18,51 +18,73 @@ class _ProfileViewState extends State<ProfileView> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          InkWell(
-            child: ListTile(
-              leading: Consumer<LoginViewModel>(
-                builder: (context, loginViewModel, child) {
-                  return ClipOval(
-                    child: Image.network(
-                      loginViewModel
-                              .user?.kakaoAccount?.profile?.profileImageUrl ??
-                          '',
-                      width: 50, // 원하는 너비 설정
-                      height: 50, // 원하는 높이 설정
-                      cacheHeight: 50,
-                      cacheWidth: 50,
-                      fit: BoxFit.cover, // 이미지를 박스에 맞춰 잘라냄
-                    ),
-                  );
-                },
-              ),
-              title: Consumer<LoginViewModel>(
-                builder: (context, loginViewModel, child) {
-                  return Text(
-                      loginViewModel.user?.kakaoAccount?.profile?.nickname ??
-                          '');
-                },
-              ),
-              subtitle: Consumer<LoginViewModel>(
-                builder: (context, loginViewModel, child) {
-                  return Text(loginViewModel.user?.kakaoAccount?.email ??
-                      'email is not found.');
-                },
-              ),
-              trailing: Consumer<LoginViewModel>(
-                builder: (context, loginViewModel, child) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      loginViewModel.logout();
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginView()),
-                      );
-                    },
-                    child: const Text("로그아웃"),
-                  );
-                },
+          ListTile(
+            leading: Consumer<LoginViewModel>(
+              builder: (context, loginViewModel, child) {
+                return ClipOval(
+                  child: Image.network(
+                    loginViewModel
+                            .user?.kakaoAccount?.profile?.profileImageUrl ??
+                        '',
+                    width: 50, // 원하는 너비 설정
+                    height: 50, // 원하는 높이 설정
+                    cacheHeight: 50,
+                    cacheWidth: 50,
+                    fit: BoxFit.cover, // 이미지를 박스에 맞춰 잘라냄
+                  ),
+                );
+              },
+            ),
+            title: Consumer<LoginViewModel>(
+              builder: (context, loginViewModel, child) {
+                return Text(
+                    loginViewModel.user?.kakaoAccount?.profile?.nickname ?? '');
+              },
+            ),
+            subtitle: Consumer<LoginViewModel>(
+              builder: (context, loginViewModel, child) {
+                return Text(loginViewModel.user?.kakaoAccount?.email ??
+                    'email is not found.');
+              },
+            ),
+            onTap: () {},
+            trailing: Consumer<LoginViewModel>(
+              builder: (context, loginViewModel, child) {
+                return ElevatedButton(
+                  onPressed: () {
+                    loginViewModel.logout();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginView()),
+                    );
+                  },
+                  child: const Text("로그아웃"),
+                );
+              },
+            ),
+          ),
+          const Divider(
+            color: Colors.grey, // 구분선 색상
+            thickness: 1, // 구분선 두께
+            indent: 16.0, // 구분선 시작 지점 여백
+            endIndent: 16.0, // 구분선 끝 지점 여백
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16.0), // 둥근 모서리 반경 설정
+            child: Container(
+              height: 200,
+              color: Colors.blue,
+              padding: const EdgeInsets.all(16.0),
+              child: const Center(
+                child: Text(
+                  "Tier",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
           ),

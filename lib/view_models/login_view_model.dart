@@ -4,7 +4,8 @@ import 'package:oss_qbank/services/social_login.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final SocialLogin _socialLogin;
-  bool isLogined = false;
+  bool isLogined = false; // 로그인 상태
+  bool isLoading = true; // 로딩 상태
   User? user;
 
   LoginViewModel(this._socialLogin) {
@@ -19,15 +20,16 @@ class LoginViewModel extends ChangeNotifier {
 
         // 유효한 토큰일 경우 사용자 정보 가져오기
         user = await UserApi.instance.me();
-        isLogined = true;
+        isLogined = true; // 로그인 상태 업데이트
       } catch (error) {
         print('토큰 오류 발생: $error');
-        isLogined = false;
+        isLogined = false; // 오류 발생 시 로그인 상태 false
       }
     } else {
       print('발급된 토큰 없음');
-      isLogined = false;
+      isLogined = false; // 토큰이 없는 경우 로그인 상태 false
     }
+    isLoading = false; // 로딩 완료
     notifyListeners(); // 상태 변경 알림
   }
 
