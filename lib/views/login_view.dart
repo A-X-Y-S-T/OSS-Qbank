@@ -1,21 +1,15 @@
-import 'package:oss_qbank/services/kakao_login.dart';
 import 'package:oss_qbank/view_models/login_view_model.dart';
-
 import 'package:flutter/material.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:oss_qbank/views/main_view.dart';
+import 'package:provider/provider.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
   @override
-  _LoginViewState createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<LoginView> {
-  final LoginViewModel _loginViewModel = LoginViewModel(KakaoLogin());
-
-  @override
   Widget build(BuildContext context) {
+    final loginViewModel = Provider.of<LoginViewModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -27,17 +21,25 @@ class _LoginViewState extends State<LoginView> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () async {
-                await _loginViewModel.login();
-                setState(() {});
+                await loginViewModel.login();
+                if (loginViewModel.isLogined) {
+                  // 로그인 성공 시 MainView로 이동
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const MainView()),
+                  );
+                }
               },
               child: Image.asset('assets/images/kakao_login_medium_narrow.png'),
             ),
             ElevatedButton(
               onPressed: () async {
-                await _loginViewModel.logout();
-                setState(() {});
+                await loginViewModel.logout();
+                // 로그아웃 후 다시 LoginView로 이동
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const LoginView()),
+                );
               },
-              child: const Text('아오 디자인 개빡침 버림 ㅅㄱ'),
+              child: const Text('디자인 뭐같네.. 안해 때려쳐'),
             ),
           ],
         ),

@@ -7,21 +7,42 @@ class LoginViewModel extends ChangeNotifier {
   bool isLogined = false;
   User? user;
 
-  LoginViewModel(this._socialLogin);
+  LoginViewModel(this._socialLogin) {
+    _checkKakaoToken(); // 생성자에서 토큰 유효성 검사 시작
+  }
+
+  Future<void> _checkKakaoToken() async {
+    if (await AuthApi.instance.hasToken()) {
+      try {
+        AccessTokenInfo tokenInfo = await UserApi.instance.accessTokenInfo();
+        print('토큰 유효: ${tokenInfo.id}, ${tokenInfo.expiresIn}');
+
+        // 유효한 토큰일 경우 사용자 정보 가져오기
+        user = await UserApi.instance.me();
+        isLogined = true;
+      } catch (error) {
+        print('토큰 오류 발생: $error');
+        isLogined = false;
+      }
+    } else {
+      print('발급된 토큰 없음');
+      isLogined = false;
+    }
+    notifyListeners(); // 상태 변경 알림
+  }
 
   Future<void> login() async {
     isLogined = await _socialLogin.login();
-
     if (isLogined) {
       user = await UserApi.instance.me();
-      notifyListeners(); // 상태가 변경되었음을 알림
     }
+    notifyListeners();
   }
 
   Future<void> logout() async {
     await _socialLogin.logout();
     isLogined = false;
     user = null;
-    notifyListeners(); // 상태가 변경되었음을 알림
+    notifyListeners();
   }
 }

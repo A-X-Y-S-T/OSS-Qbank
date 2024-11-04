@@ -40,13 +40,15 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loginViewModel = Provider.of<LoginViewModel>(context, listen: true);
-
-    // 로그인 상태에 따라 화면을 전환
-    if (loginViewModel.isLogined) {
-      return const MainView(); // 로그인된 상태면 MainView로
-    } else {
-      return const LoginView(); // 로그인되지 않은 상태면 LoginView로
-    }
+    // LoginViewModel을 사용하여 초기화가 완료되면 로그인 상태에 따라 화면 전환
+    return Consumer<LoginViewModel>(
+      builder: (context, loginViewModel, child) {
+        if (loginViewModel.user != null && loginViewModel.isLogined) {
+          return const MainView(); // 로그인된 상태면 MainView로
+        } else {
+          return const LoginView(); // 로그인되지 않은 상태면 LoginView로
+        }
+      },
+    );
   }
 }
