@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/Users/jeons/Documents/Projects/Flutter projects/oss_qbank/linux"
+    "cmake.sourceDirectory": "C:/Users/jeons/Documents/Projects/Flutter projects/oss_qbank/linux",
+    "java.configuration.updateBuildConfiguration": "disabled"
 }
