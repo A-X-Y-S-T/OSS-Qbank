@@ -1,47 +1,48 @@
 plugins {
     id "com.android.application"
-    // START: FlutterFire Configuration
-    id 'com.google.gms.google-services'
-    // END: FlutterFire Configuration
     id "kotlin-android"
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
-    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services" // Firebase 설정 플러그인
+    id "dev.flutter.flutter-gradle-plugin" // Flutter 플러그인
 }
 
 android {
     namespace = "com.oss.qbank"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    compileSdkVersion 34 // 직접 숫자로 입력하여 버전 명시
+
+    defaultConfig {
+        applicationId = "com.oss.qbank"
+        minSdkVersion 34
+        targetSdkVersion 34
+        versionCode 1
+        versionName "1.0"
+
+        multiDexEnabled true // 멀티덱스 활성화
+    }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
-    }
-
-    defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.oss.qbank"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        jvmTarget = "1.8"
     }
 
     buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
-        }
+    release {
+        minifyEnabled true // 코드 축소 활성화
+        shrinkResources true // 리소스 축소 활성화 (minifyEnabled가 true여야 작동함)
+        proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        signingConfig signingConfigs.debug // 실제 릴리스 시에는 release 키로 변경 필요
     }
+}
 }
 
 flutter {
-    source = "../.."
+    source = "../.." // Flutter 소스 경로 설정
+}
+
+dependencies {
+    implementation "androidx.multidex:multidex:2.0.1" // 멀티덱스 의존성 추가
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 }
