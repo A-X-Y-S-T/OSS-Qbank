@@ -8,6 +8,7 @@ class MainView extends StatefulWidget {
   State<MainView> createState() => _MainViewState();
 }
 
+/// 탭들을 관리하기 위한 페이지.
 class _MainViewState extends State<MainView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
