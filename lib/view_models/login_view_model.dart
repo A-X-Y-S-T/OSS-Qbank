@@ -16,17 +16,17 @@ class LoginViewModel extends ChangeNotifier {
     if (await AuthApi.instance.hasToken()) {
       try {
         AccessTokenInfo tokenInfo = await UserApi.instance.accessTokenInfo();
-        print('토큰 유효: ${tokenInfo.id}, ${tokenInfo.expiresIn}');
+        debugPrint('토큰 유효: ${tokenInfo.id}, ${tokenInfo.expiresIn}');
 
         // 유효한 토큰일 경우 사용자 정보 가져오기
         user = await UserApi.instance.me();
         isLogined = true; // 로그인 상태 업데이트
       } catch (error) {
-        print('토큰 오류 발생: $error');
+        debugPrint('토큰 오류 발생: $error');
         isLogined = false; // 오류 발생 시 로그인 상태 false
       }
     } else {
-      print('발급된 토큰 없음');
+      debugPrint('발급된 토큰 없음');
       isLogined = false; // 토큰이 없는 경우 로그인 상태 false
     }
     isLoading = false; // 로딩 완료

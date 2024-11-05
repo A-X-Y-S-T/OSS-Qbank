@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:oss_qbank/views/login_view.dart';
-import 'package:provider/provider.dart';
 
+import 'package:oss_qbank/views/login_view.dart';
 import 'package:oss_qbank/view_models/login_view_model.dart';
+
+import 'package:provider/provider.dart';
 
 /// 프로필 페이지
 class ProfileView extends StatefulWidget {
@@ -21,11 +22,14 @@ class _ProfileViewState extends State<ProfileView> {
           ListTile(
             leading: Consumer<LoginViewModel>(
               builder: (context, loginViewModel, child) {
+                // 프로필 이미지 URL을 가져옴
+                final profileImageUrl = loginViewModel
+                        .user?.kakaoAccount?.profile?.profileImageUrl ??
+                    '';
+
                 return ClipOval(
                   child: Image.network(
-                    loginViewModel
-                            .user?.kakaoAccount?.profile?.profileImageUrl ??
-                        '',
+                    profileImageUrl, // 프로필 이미지 URL, 프로필이 없으면 빈 문자열 사용
                     width: 50, // 원하는 너비 설정
                     height: 50, // 원하는 높이 설정
                     cacheHeight: 50,
@@ -47,7 +51,6 @@ class _ProfileViewState extends State<ProfileView> {
                     'email is not found.');
               },
             ),
-            onTap: () {},
             trailing: Consumer<LoginViewModel>(
               builder: (context, loginViewModel, child) {
                 return ElevatedButton(
@@ -78,7 +81,7 @@ class _ProfileViewState extends State<ProfileView> {
               padding: const EdgeInsets.all(16.0),
               child: const Center(
                 child: Text(
-                  "Tier",
+                  "Tier", // 텍스트 내용
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,

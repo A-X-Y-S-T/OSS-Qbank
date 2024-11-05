@@ -1,3 +1,15 @@
+// Project-level build.gradle file
+buildscript {
+    repositories {
+        google() // Firebase와 Android Gradle Plugin을 위한 저장소
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.2' // Android Gradle Plugin 버전, 필요에 따라 조정
+        classpath 'com.google.gms:google-services:4.3.14' // Firebase 서비스용 Google 서비스 플러그인
+    }
+}
+
 allprojects {
     repositories {
         google()
@@ -5,14 +17,17 @@ allprojects {
     }
 }
 
+// 프로젝트의 빌드 디렉토리 설정
 rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
 subprojects {
     project.evaluationDependsOn(":app")
 }
 
+// 클린 빌드 태스크
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
