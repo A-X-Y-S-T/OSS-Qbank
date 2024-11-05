@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:5114094801:android:26e159665e9961edc1d1f0",
         "android_client_info": {
-          "package_name": "com.oss.qbank"
+          "package_name": "com.example.oss_qbank"
         }
       },
       "oauth_client": [],

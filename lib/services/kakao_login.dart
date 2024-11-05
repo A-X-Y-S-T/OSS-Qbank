@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oss_qbank/services/social_login.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
-///Kakao Login
+/// Kakao Login
 class KakaoLogin implements SocialLogin {
   @override
   Future<bool> login() async {

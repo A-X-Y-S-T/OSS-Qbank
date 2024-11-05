@@ -19,7 +19,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.oss.qbank"
+        applicationId = "com.example.oss_qbank"
         minSdk = 32
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
