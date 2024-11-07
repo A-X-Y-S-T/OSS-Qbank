@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.oss.qbank"
-    compileSdkVersion 34 // 직접 숫자로 입력하여 버전 명시
+    compileSdkVersion 34 // 최신 버전 사용
 
     defaultConfig {
         applicationId = "com.oss.qbank"
-        minSdkVersion 34
-        targetSdkVersion 34
+        minSdkVersion 34 // 최소 SDK 버전은 34로 설정 (이 이하는 버전 충돌)
+        targetSdkVersion 34 // 최신 SDK 버전으로 설정
         versionCode 1
         versionName "1.0"
 
@@ -29,13 +29,19 @@ android {
     }
 
     buildTypes {
-    release {
-        minifyEnabled true // 코드 축소 활성화
-        shrinkResources true // 리소스 축소 활성화 (minifyEnabled가 true여야 작동함)
-        proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-        signingConfig signingConfigs.debug // 실제 릴리스 시에는 release 키로 변경 필요
+        release {
+            minifyEnabled true // 코드 축소 활성화
+            shrinkResources true // 리소스 축소 활성화 (minifyEnabled가 true여야 작동함)
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.debug // 실제 릴리스 시에는 release 키로 변경 필요
+        }
     }
 }
+
+repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' } // Kakao SDK의 Maven 저장소 추가
 }
 
 flutter {
@@ -45,4 +51,7 @@ flutter {
 dependencies {
     implementation "androidx.multidex:multidex:2.0.1" // 멀티덱스 의존성 추가
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+    implementation "com.google.android.gms:play-services-auth:20.3.0" // Google Sign-In 관련 라이브러리 (Firebase와의 연동을 위해 필요)
+    implementation 'com.google.firebase:firebase-auth:21.0.6' // Firebase Auth 관련 라이브러리 (Firebase 인증)
+    implementation 'com.kakao.sdk:v2-user:2.10.0' // 카카오 SDK 버전 확인 후 적절한 버전으로 추가
 }
